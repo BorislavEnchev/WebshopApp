@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopApp.Data", "WebshopA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopApp.Models", "WebshopApp.Models\WebshopApp.Models.csproj", "{F3A15384-39C0-4F4C-8E14-4A0C8E3D1344}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopApp.Sandbox", "WebshopApp.Sandbox\WebshopApp.Sandbox.csproj", "{601C91D0-55A6-47AD-BA42-C12F09E9F486}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F3A15384-39C0-4F4C-8E14-4A0C8E3D1344}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A15384-39C0-4F4C-8E14-4A0C8E3D1344}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A15384-39C0-4F4C-8E14-4A0C8E3D1344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{601C91D0-55A6-47AD-BA42-C12F09E9F486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{601C91D0-55A6-47AD-BA42-C12F09E9F486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{601C91D0-55A6-47AD-BA42-C12F09E9F486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{601C91D0-55A6-47AD-BA42-C12F09E9F486}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
