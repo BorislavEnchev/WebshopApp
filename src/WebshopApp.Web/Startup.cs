@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebshopApp.Web.Areas.Identity.Data;
+using WebshopApp.Data;
+using WebshopApp.Models;
 using WebshopApp.Web.Models;
 
 namespace WebshopApp.Web
@@ -39,7 +40,14 @@ namespace WebshopApp.Web
                 options.UseSqlServer(
                     this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<WebshopAppUser>()
+            services.AddDefaultIdentity<WebshopAppUser>(op =>
+                {
+                    op.Password.RequireDigit = false;
+                    op.Password.RequiredLength = 3;
+                    op.Password.RequireUppercase = false;
+                    op.Password.RequireNonAlphanumeric = false;
+                    op.Password.RequireLowercase = false;
+                })
                 .AddEntityFrameworkStores<WebshopAppContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

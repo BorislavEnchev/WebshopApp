@@ -1,4 +1,5 @@
-﻿@inject SignInManager<WebshopAppUser> SignInManager
+﻿@using WebshopApp.Models
+@inject SignInManager<WebshopAppUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

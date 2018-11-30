@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebshopApp.Web.Areas.Identity.Data;
+using WebshopApp.Models;
 
 namespace WebshopApp.Web.Areas.Identity.Pages.Account.Manage
 {
