@@ -1,0 +1,50 @@
+﻿@model WebshopApp.Web.Areas.Product.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>Product Details</title>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h3 class="display-4 text-center">Product Details</h3>
+        <hr />
+        <div>
+            <dl class="dl-horizontal text-center">
+                <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Image)
+                </dd>
+            </dl>
+        </div>
+        <hr />
+        <div class="text-center justify-content-around">
+            <a class="btn-dark btn-primary btn-lg" asp-area="Product" asp-controller="ProductEdit" asp-action="Edit" role="button">Edit</a>
+            <a class="btn-dark btn-primary btn-lg" asp-controller="Home" asp-action="Index" role="button">Back</a>
+        </div>
+    </div>
+</div>
+

@@ -8,7 +8,7 @@ namespace WebshopApp.Web
     {
         public MappingConfiguration()
         {
-            CreateMap<Product, ProductViewModel>().ReverseMap();
+            this.CreateMap<Product, ProductViewModel>().ReverseMap();
         }
     }
 }

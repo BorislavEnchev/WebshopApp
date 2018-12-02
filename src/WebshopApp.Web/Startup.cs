@@ -46,10 +46,10 @@ namespace WebshopApp.Web
                 })
                 .AddEntityFrameworkStores<WebshopAppContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddScoped<IProductsServices, ProductsServices>();
 
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
             services.AddAuthentication()
                 .AddFacebook(facebookOptions =>
                 {
@@ -61,7 +61,7 @@ namespace WebshopApp.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, WebshopAppContext context)
         {
             if (env.IsDevelopment())
             {
@@ -73,7 +73,7 @@ namespace WebshopApp.Web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            //Seeder.Seed(context);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

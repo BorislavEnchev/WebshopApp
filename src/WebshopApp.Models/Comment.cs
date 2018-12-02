@@ -10,7 +10,7 @@ namespace WebshopApp.Models
 
         public virtual Product Product { get; set; }
 
-        public int WebshopAppUserId { get; set; }
+        public int UserId { get; set; }
 
         public virtual WebshopAppUser User { get; set; }
     }

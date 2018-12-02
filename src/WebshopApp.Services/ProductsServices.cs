@@ -14,6 +14,8 @@ namespace WebshopApp.Services
             _context = context;
         }
 
-        public IQueryable<Product> All() => this._context.Products;
+        public IQueryable<Product> All() => _context.Products;
+
+        public Product GetProductById(int id) => _context.Products.FirstOrDefault(x => x.Id == id);
     }
 }

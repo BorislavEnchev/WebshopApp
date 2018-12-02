@@ -4,15 +4,39 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebshopApp.Services.Contracts;
+using WebshopApp.Web.Areas.Product.Models;
 using WebshopApp.Web.Models;
 
 namespace WebshopApp.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IProductsServices _services;
+
+        public HomeController(IProductsServices services)
+        {
+            _services = services;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var allProducts = _services.All()
+                .Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price
+                })
+                .ToList();
+
+            var allProductsViewModel = new ProductsCollectionViewModel()
+            {
+                Products = allProducts
+            };
+
+            return View(allProductsViewModel);
         }
 
         public IActionResult About()
