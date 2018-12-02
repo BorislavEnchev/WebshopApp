@@ -3,40 +3,45 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.Contracts;
 using WebshopApp.Web.Areas.Product.Models;
 using WebshopApp.Web.Models;
+using X.PagedList;
 
 namespace WebshopApp.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IProductsServices _services;
+        private readonly IMapper _mapper;
 
-        public HomeController(IProductsServices services)
+        public HomeController(IProductsServices services, IMapper mapper)
         {
             _services = services;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            var allProducts = _services.All()
-                .Select(p => new ProductViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    Price = p.Price
-                })
-                .ToList();
+            var products = _services.All().ToList();
 
-            var allProductsViewModel = new ProductsCollectionViewModel()
+            var viewModels = new List<ProductViewModel>();
+
+            foreach (var product in products)
             {
-                Products = allProducts
-            };
 
-            return View(allProductsViewModel);
+                var productViewModel = _mapper.Map<ProductViewModel>(product);
+
+                viewModels.Add(productViewModel);
+            }
+
+            var nextPage = page ?? 1;
+
+            var pagedViewModels = viewModels.ToPagedList(nextPage, 3);
+
+            return View(pagedViewModels);
         }
 
         public IActionResult About()
