@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
@@ -16,6 +17,12 @@
   <ItemGroup>
     <ProjectReference Include="..\WebshopApp.Data\WebshopApp.Data.csproj" />
     <ProjectReference Include="..\WebshopApp.Models\WebshopApp.Models.csproj" />
+    <ProjectReference Include="..\WebshopApp.Services\WebshopApp.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Product\Data\" />
+    <Folder Include="Areas\Product\Views\" />
   </ItemGroup>
 
 </Project>

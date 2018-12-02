@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebshopApp.Data.Common;
@@ -12,7 +10,7 @@ namespace WebshopApp.Data
         where TEntity : class
     {
         private readonly WebshopAppContext context;
-        private DbSet<TEntity> dbSet;
+        private readonly DbSet<TEntity> dbSet;
 
         public DbRepository(WebshopAppContext context)
         {

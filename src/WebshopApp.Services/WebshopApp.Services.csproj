@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebshopApp.Data\WebshopApp.Data.csproj" />
+    <ProjectReference Include="..\WebshopApp.Models\WebshopApp.Models.csproj" />
+  </ItemGroup>
+
+</Project>
