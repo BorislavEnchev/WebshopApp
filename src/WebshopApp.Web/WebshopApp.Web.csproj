@@ -22,9 +22,4 @@
     <ProjectReference Include="..\WebshopApp.Services\WebshopApp.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Product\Data\" />
-    <Folder Include="Areas\Product\Views\" />
-  </ItemGroup>
-
 </Project>

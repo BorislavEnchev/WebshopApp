@@ -9,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using WebshopApp.Data;
 using WebshopApp.Models;
 using WebshopApp.Services;
-using WebshopApp.Services.Contracts;
+using WebshopApp.Services.DataServices;
+using WebshopApp.Services.MappingServices;
+using WebshopApp.Web.Areas.Product.Models;
 
 namespace WebshopApp.Web
 {
@@ -25,6 +27,10 @@ namespace WebshopApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AutoMapperConfig.RegisterMappings(
+                typeof(ProductViewModel).Assembly
+            );
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -56,8 +62,6 @@ namespace WebshopApp.Web
                     facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                     facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
                 });
-
-            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

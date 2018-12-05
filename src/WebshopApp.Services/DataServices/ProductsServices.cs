@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using WebshopApp.Data;
 using WebshopApp.Models;
-using WebshopApp.Services.Contracts;
 
-namespace WebshopApp.Services
+namespace WebshopApp.Services.DataServices
 {
     public class ProductsServices : IProductsServices
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebshopApp.Services.Contracts;
+using WebshopApp.Services.DataServices;
 using WebshopApp.Web.Areas.Product.Models;
 using WebshopApp.Web.Models;
 using X.PagedList;

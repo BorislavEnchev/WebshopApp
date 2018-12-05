@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using WebshopApp.Models;
 
-namespace WebshopApp.Services.Contracts
+namespace WebshopApp.Services.DataServices
 {
     public interface IProductsServices
     {
