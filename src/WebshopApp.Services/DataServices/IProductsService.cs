@@ -1,12 +1,19 @@
-﻿using System.Linq;
-using WebshopApp.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebshopApp.Services.Models;
 
 namespace WebshopApp.Services.DataServices
 {
-    public interface IProductsServices
+    public interface IProductsService
     {
-        IQueryable<Product> All();
+        IEnumerable<ProductViewModel> GetAll();
 
-        Product GetProductById(int id);
+        Task<int> Create(int categoryId, string name, string description, decimal price/*, byte[] image*/);
+
+        TViewModel GetProductById<TViewModel>(int id);
+
+        IEnumerable<ProductViewModel> GetAllByCategory(int categoryId);
+
+        bool AddRatingToProduct(int productId, int rating);
     }
 }

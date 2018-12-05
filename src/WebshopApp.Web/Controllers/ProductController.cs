@@ -1,24 +1,37 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.DataServices;
-using WebshopApp.Web.Areas.Product.Models;
-using WebshopApp.Web.Controllers;
+using WebshopApp.Services.Models;
+using WebshopApp.Web.Models;
 
-namespace WebshopApp.Web.Areas.Product.Controllers
+namespace WebshopApp.Web.Controllers
 {
     public class ProductController : BaseController
     {
-        public ProductController(IProductsServices services)
+        private readonly IProductsService productsService;
+
+        public ProductController(IProductsService productsService)
         {
+            this.productsService = productsService;
         }
 
         public IActionResult Details(int id)
         {
-            //var product = services.GetProductById(id);
+            var product = this.productsService.GetProductById<ProductViewModel>(id);
 
-            //var viewModel = Mapper.Map<ProductViewModel>(product);
+            return this.View(product);
+        }
 
-            //return this.View("/Views/Product/Details.cshtml", viewModel);
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            var id = await this.productsService.Create(input.CategoryId, input.Name, input.Description, input.Price);
+            return this.RedirectToAction("Details", new { id = id });
         }
     }
 }

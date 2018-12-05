@@ -1,6 +1,9 @@
-﻿namespace WebshopApp.Web.Areas.Product.Models
+﻿using WebshopApp.Models;
+using WebshopApp.Services.MappingServices;
+
+namespace WebshopApp.Services.Models
 {
-    public class ProductViewModel
+    public class ProductViewModel : IMapFrom<Product>
     {
         public int Id { get; set; }
 

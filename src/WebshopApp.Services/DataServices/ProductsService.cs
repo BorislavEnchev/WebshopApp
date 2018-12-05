@@ -1,20 +1,58 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WebshopApp.Data;
+using WebshopApp.Data.Common;
 using WebshopApp.Models;
+using WebshopApp.Services.MappingServices;
+using WebshopApp.Services.Models;
 
 namespace WebshopApp.Services.DataServices
 {
-    public class ProductsServices : IProductsServices
+    public class ProductsService : IProductsService
     {
-        private readonly WebshopAppContext _context;
+        private readonly IRepository<Product> productsRepository;
 
-        public ProductsServices(WebshopAppContext context)
+        public ProductsService(IRepository<Product> productsRepository, IRepository<Category> categoriesRepository)
         {
-            _context = context;
+            this.productsRepository = productsRepository;
         }
 
-        public IQueryable<Product> All() => _context.Products;
+        public IEnumerable<ProductViewModel> GetAll() => this.productsRepository.All().To<ProductViewModel>();
+        
+        public async Task<int> Create(int categoryId, string name, string description, decimal price/*, byte[] image*/)
+        {
+            var product = new Product()
+            {
+                CategoryId = categoryId,
+                Name = name,
+                Description = description,
+                Price = price,
+                //Image = image
+            };
 
-        public Product GetProductById(int id) => _context.Products.FirstOrDefault(x => x.Id == id);
+            await this.productsRepository.AddAsync(product);
+            await this.productsRepository.SaveChangesAsync();
+
+            return product.Id;
+        }
+
+        public TViewModel GetProductById<TViewModel>(int id)
+        {
+            var product = this.productsRepository.All().Where(x => x.Id == id)
+                .To<TViewModel>().FirstOrDefault();
+
+            return product;
+        }
+
+        public IEnumerable<ProductViewModel> GetAllByCategory(int categoryId) 
+            => this.productsRepository.All()
+                .Where(p => p.CategoryId == categoryId)
+                .To<ProductViewModel>();
+
+        public bool AddRatingToProduct(int productId, int rating)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

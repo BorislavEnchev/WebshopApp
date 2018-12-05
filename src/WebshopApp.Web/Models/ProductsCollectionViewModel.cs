@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using WebshopApp.Services.Models;
 
-namespace WebshopApp.Web.Areas.Product.Models
+namespace WebshopApp.Web.Models
 {
     public class ProductsCollectionViewModel
     {

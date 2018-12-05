@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.DataServices;
-using WebshopApp.Web.Areas.Product.Models;
+using WebshopApp.Services.Models;
 using WebshopApp.Web.Models;
 using X.PagedList;
 
@@ -14,27 +11,22 @@ namespace WebshopApp.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IProductsServices _services;
-        private readonly IMapper _mapper;
+        private readonly IProductsService productsService;
 
-        public HomeController(IProductsServices services, IMapper mapper)
+        public HomeController(IProductsService productsService)
         {
-            _services = services;
-            _mapper = mapper;
+            this.productsService = productsService;
         }
 
         public IActionResult Index(int? page)
         {
-            var products = _services.All().ToList();
+            var products = this.productsService.GetAll().ToList();
 
             var viewModels = new List<ProductViewModel>();
 
             foreach (var product in products)
             {
-
-                var productViewModel = _mapper.Map<ProductViewModel>(product);
-
-                viewModels.Add(productViewModel);
+                viewModels.Add(product);
             }
 
             var nextPage = page ?? 1;

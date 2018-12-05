@@ -1,6 +1,6 @@
 ﻿@using X.PagedList
 @using X.PagedList.Mvc.Core
-@model IEnumerable<WebshopApp.Web.Areas.Product.Models.ProductViewModel>
+@model IEnumerable<WebshopApp.Services.Models.ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -53,7 +53,7 @@
                             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a asp-area="Product" asp-controller="ProductDetails" asp-action="Details" asp-route-id="@product.Id">@product.Name</a>
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">@product.Name</a>
                                 </h4>
                                 <h5>$@product.Price</h5>
                                 <p class="card-text">@product.Description</p>

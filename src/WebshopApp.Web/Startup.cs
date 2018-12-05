@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebshopApp.Data;
 using WebshopApp.Models;
-using WebshopApp.Services;
 using WebshopApp.Services.DataServices;
 using WebshopApp.Services.MappingServices;
-using WebshopApp.Web.Areas.Product.Models;
+using WebshopApp.Services.Models;
 
 namespace WebshopApp.Web
 {
@@ -52,7 +50,7 @@ namespace WebshopApp.Web
                 })
                 .AddEntityFrameworkStores<WebshopAppContext>();
 
-            services.AddScoped<IProductsServices, ProductsServices>();
+            services.AddScoped<IProductsService, ProductsService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
