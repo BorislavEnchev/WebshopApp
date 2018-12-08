@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using WebshopApp.Data;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
+using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.MappingServices;
 using WebshopApp.Services.Models;
 
@@ -13,7 +14,7 @@ namespace WebshopApp.Services.DataServices
     {
         private readonly IRepository<Product> productsRepository;
 
-        public ProductsService(IRepository<Product> productsRepository, IRepository<Category> categoriesRepository)
+        public ProductsService(IRepository<Product> productsRepository)
         {
             this.productsRepository = productsRepository;
         }

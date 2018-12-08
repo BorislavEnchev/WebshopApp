@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WebshopApp.Services.DataServices;
+using WebshopApp.Services.DataServices.Contracts;
 
 namespace WebshopApp.Web.Models.CustomAttributes
 {

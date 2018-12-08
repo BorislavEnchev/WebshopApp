@@ -6,10 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebshopApp.Data;
+using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices;
+using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.MappingServices;
 using WebshopApp.Services.Models;
+using WebshopApp.Web.Models;
 
 namespace WebshopApp.Web
 {
@@ -26,7 +29,8 @@ namespace WebshopApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             AutoMapperConfig.RegisterMappings(
-                typeof(ProductViewModel).Assembly
+                typeof(ProductViewModel).Assembly,
+                typeof(ProductsCollectionViewModel).Assembly
             );
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -50,7 +54,9 @@ namespace WebshopApp.Web
                 })
                 .AddEntityFrameworkStores<WebshopAppContext>();
 
+            services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             

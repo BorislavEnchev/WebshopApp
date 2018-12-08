@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WebshopApp.Services.Models;
 
-namespace WebshopApp.Services.DataServices
+namespace WebshopApp.Services.DataServices.Contracts
 {
     public interface IProductsService
     {

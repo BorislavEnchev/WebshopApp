@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.DataServices;
+using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
 using WebshopApp.Web.Models;
 

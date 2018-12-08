@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.DataServices;
+using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
 using WebshopApp.Web.Models;
 using X.PagedList;

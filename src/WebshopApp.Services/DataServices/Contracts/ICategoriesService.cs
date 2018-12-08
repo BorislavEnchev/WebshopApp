@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebshopApp.Services.Models;
 
-namespace WebshopApp.Services.DataServices
+namespace WebshopApp.Services.DataServices.Contracts
 {
     public interface ICategoriesService
     {
