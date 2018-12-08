@@ -5,7 +5,7 @@ using WebshopApp.Services.MappingServices;
 
 namespace WebshopApp.Services.Models
 {
-    public class CategoryIdAndNameViewModel : IMapFrom<Category>, IHaveCustomMappings
+    public class CategoryViewModel : IMapFrom<Category>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace WebshopApp.Services.Models
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {
-            configuration.CreateMap<Category, CategoryIdAndNameViewModel>()
+            configuration.CreateMap<Category, CategoryViewModel>()
                 .ForMember(c => c.CountOfAllProducts,
                     m => m.MapFrom(p => p.Products.Count()));
         }

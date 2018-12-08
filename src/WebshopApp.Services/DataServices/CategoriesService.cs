@@ -17,10 +17,10 @@ namespace WebshopApp.Services.DataServices
             this.categoriesRepository = categoriesRepository;
         }
 
-        public IEnumerable<CategoryIdAndNameViewModel> GetAll()
+        public IEnumerable<CategoryViewModel> GetAll()
         {
             var categories = this.categoriesRepository.All().OrderBy(x => x.Name)
-                .To<CategoryIdAndNameViewModel>().ToList();
+                .To<CategoryViewModel>().ToList();
 
             return categories;
         }

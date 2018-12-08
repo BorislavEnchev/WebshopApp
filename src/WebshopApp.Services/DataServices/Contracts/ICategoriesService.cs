@@ -5,7 +5,7 @@ namespace WebshopApp.Services.DataServices.Contracts
 {
     public interface ICategoriesService
     {
-        IEnumerable<CategoryIdAndNameViewModel> GetAll();
+        IEnumerable<CategoryViewModel> GetAll();
 
         bool IsCategoryIdValid(int categoryId);
 
