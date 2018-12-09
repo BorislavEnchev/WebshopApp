@@ -32,9 +32,9 @@ namespace WebshopApp.Web.Controllers
 
             var nextPage = page ?? 1;
 
-            var pagedViewModels = viewModels.ToPagedList(nextPage, 3);
+            //var pagedViewModels = viewModels.ToPagedList(nextPage, 3);
 
-            return View(pagedViewModels);
+            return View(viewModels);
         }
 
         public IActionResult About()
