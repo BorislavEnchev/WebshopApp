@@ -28,6 +28,33 @@ namespace WebshopApp.Web.Controllers
         }
 
         [Authorize]
+        public IActionResult Edit(int id)
+        {
+            this.ViewData["Categories"] = this.categoriesService.GetAll()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name,
+                });
+
+            var product = this.productsService.GetProductById<EditProductBindingModel>(id);
+
+            return this.View(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProductBindingModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            var id = await this.productsService.Edit(model.Id, model.CategoryId, model.Name, model.Description, model.Price);
+            return this.RedirectToAction("Details", new { id = model.Id });
+        }
+
+        [Authorize]
         public IActionResult Create()
         {
             this.ViewData["Categories"] = this.categoriesService.GetAll()
@@ -40,14 +67,14 @@ namespace WebshopApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductInputModel input)
+        public async Task<IActionResult> Create(CreateProductBindingModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                return this.View(model);
             }
 
-            var id = await this.productsService.Create(input.CategoryId, input.Name, input.Description, input.Price);
+            var id = await this.productsService.Create(model.CategoryId, model.Name, model.Description, model.Price);
             return this.RedirectToAction("Details", new { id = id });
         }
     }

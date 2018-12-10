@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebshopApp.Data;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
@@ -33,6 +32,28 @@ namespace WebshopApp.Services.DataServices
             };
 
             await this.productsRepository.AddAsync(product);
+            await this.productsRepository.SaveChangesAsync();
+
+            return product.Id;
+        }
+
+        public async Task<int> Edit(int id, int categoryId, string name, string description, decimal price/*, byte[] image*/)
+        {
+            var products = productsRepository.All();
+
+            var product = products.FirstOrDefault(x => x.Id == id);
+
+            if (product == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            product.Id = id;
+            product.CategoryId = categoryId;
+            product.Name = name;
+            product.Description = description;
+            product.Price = price;
+
             await this.productsRepository.SaveChangesAsync();
 
             return product.Id;

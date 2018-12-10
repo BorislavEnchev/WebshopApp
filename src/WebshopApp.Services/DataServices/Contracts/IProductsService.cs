@@ -10,6 +10,8 @@ namespace WebshopApp.Services.DataServices.Contracts
 
         Task<int> Create(int categoryId, string name, string description, decimal price/*, byte[] image*/);
 
+        Task<int> Edit(int id, int categoryId, string name, string description, decimal price/*, byte[] image*/);
+
         TViewModel GetProductById<TViewModel>(int id);
 
         IEnumerable<ProductViewModel> GetAllByCategory(int categoryId);

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebshopApp.Services.MappingServices;
+using WebshopApp.Services.Models;
 
 namespace WebshopApp.Web.Models
 {
-    public class CreateProductInputModel
+    public class CreateProductBindingModel : IMapFrom<ProductViewModel>
     {
         [Required]
         [MinLength(5)]
