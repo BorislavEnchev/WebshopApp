@@ -59,6 +59,14 @@ namespace WebshopApp.Services.DataServices
             return product.Id;
         }
 
+        public void Delete(int id)
+        {
+            var product = productsRepository.All().FirstOrDefault(x => x.Id == id);
+
+            this.productsRepository.Delete(product);
+            this.productsRepository.SaveChangesAsync();
+        }
+
         public TViewModel GetProductById<TViewModel>(int id)
         {
             var product = this.productsRepository.All().Where(x => x.Id == id)

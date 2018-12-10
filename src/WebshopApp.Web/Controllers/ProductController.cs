@@ -77,5 +77,25 @@ namespace WebshopApp.Web.Controllers
             var id = await this.productsService.Create(model.CategoryId, model.Name, model.Description, model.Price);
             return this.RedirectToAction("Details", new { id = id });
         }
+        
+        public IActionResult Delete(int id)
+        {
+            var product = this.productsService.GetProductById<ProductViewModel>(id);
+
+            return this.View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(ProductViewModel model)
+        {
+            this.productsService.Delete(model.Id);
+
+            return this.RedirectToAction("Deleted", "Product");
+        }
+
+        public IActionResult Deleted()
+        {
+            return this.View();
+        }
     }
 }

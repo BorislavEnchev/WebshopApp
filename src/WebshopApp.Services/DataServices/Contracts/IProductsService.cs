@@ -12,6 +12,8 @@ namespace WebshopApp.Services.DataServices.Contracts
 
         Task<int> Edit(int id, int categoryId, string name, string description, decimal price/*, byte[] image*/);
 
+        void Delete(int id);
+
         TViewModel GetProductById<TViewModel>(int id);
 
         IEnumerable<ProductViewModel> GetAllByCategory(int categoryId);
