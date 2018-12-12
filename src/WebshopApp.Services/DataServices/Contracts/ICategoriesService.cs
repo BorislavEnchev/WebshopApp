@@ -10,5 +10,7 @@ namespace WebshopApp.Services.DataServices.Contracts
         bool IsCategoryIdValid(int categoryId);
 
         int? GetCategoryId(string name);
+
+        IEnumerable<ProductViewModel> GetAllProductsFromCategory(int categoryId);
     }
 }

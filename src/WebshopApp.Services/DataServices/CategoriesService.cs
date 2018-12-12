@@ -11,10 +11,12 @@ namespace WebshopApp.Services.DataServices
     public class CategoriesService : ICategoriesService
     {
         private readonly IRepository<Category> categoriesRepository;
+        private readonly IProductsService productsService;
 
-        public CategoriesService(IRepository<Category> categoriesRepository)
+        public CategoriesService(IRepository<Category> categoriesRepository, IProductsService productsService)
         {
             this.categoriesRepository = categoriesRepository;
+            this.productsService = productsService;
         }
 
         public IEnumerable<CategoryViewModel> GetAll()
@@ -31,6 +33,16 @@ namespace WebshopApp.Services.DataServices
         {
             var category = this.categoriesRepository.All().FirstOrDefault(x => x.Name == name);
             return category?.Id;
+        }
+
+        public IEnumerable<ProductViewModel> GetAllProductsFromCategory(int categoryId)
+        {
+            if (!IsCategoryIdValid(categoryId))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            return this.productsService.GetAllByCategory(categoryId);
         }
     }
 }
