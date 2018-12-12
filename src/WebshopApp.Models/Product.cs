@@ -17,6 +17,6 @@ namespace WebshopApp.Models
 
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-        public byte[] Image { get; set; }
+        public virtual ICollection<Image> Images { get; set; } = new List<Image>();
     }
 }
