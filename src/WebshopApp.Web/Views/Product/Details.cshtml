@@ -32,6 +32,15 @@
             <dd>
                 @Html.DisplayFor(model => model.Price)
             </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </dt>
+            <dd>
+                <div>
+                    <а src="@Model.ImagePath"></а>
+                </div>
+                @Html.DisplayFor(model => model.ImagePath)
+            </dd>
         </dl>
         <hr />
         <div class="text-center justify-content-around">

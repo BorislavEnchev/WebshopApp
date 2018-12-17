@@ -8,9 +8,9 @@ namespace WebshopApp.Services.DataServices.Contracts
     {
         IEnumerable<ProductViewModel> GetAll();
 
-        Task<int> Create(int categoryId, string name, string description, decimal price/*, byte[] image*/);
+        Task<int> Create(int categoryId, string name, string description, decimal price);
 
-        Task<int> Edit(int id, int categoryId, string name, string description, decimal price/*, byte[] image*/);
+        Task<int> Edit(int id, int categoryId, string name, string description, decimal price);
 
         void Delete(int id);
 

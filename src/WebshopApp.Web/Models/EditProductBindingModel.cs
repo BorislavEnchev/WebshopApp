@@ -23,6 +23,6 @@ namespace WebshopApp.Web.Models
         [Required]
         public int CategoryId { get; set; }
 
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }

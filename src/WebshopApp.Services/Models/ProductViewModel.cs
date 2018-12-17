@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using AutoMapper;
 using WebshopApp.Models;
 using WebshopApp.Services.MappingServices;
 
 namespace WebshopApp.Services.Models
 {
-    public class ProductViewModel : IMapFrom<Product>
+    public class ProductViewModel : IMapFrom<Product>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -18,6 +19,13 @@ namespace WebshopApp.Services.Models
 
         public int CategoryId { get; set; }
 
-        public ICollection<Image> Images { get; set; }
+        public string ImagePath { get; set; }
+
+        public void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+            configuration.CreateMap<Product, ProductViewModel>()
+                .ForMember(c => c.ImagePath,
+                    m => m.MapFrom(p => p.Images.Select(x => x.FileName).FirstOrDefault()));
+        }
     }
 }

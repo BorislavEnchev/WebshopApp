@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20181130114225_Product-Comment-and-Category-Entities-Implemented.cs" />
+    <Compile Remove="Migrations\20181217131957_Blog-entity-introduced.cs" />
   </ItemGroup>
 
   <ItemGroup>

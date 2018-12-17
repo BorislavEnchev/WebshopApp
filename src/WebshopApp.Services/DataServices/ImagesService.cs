@@ -12,20 +12,20 @@ namespace WebshopApp.Services.DataServices
 {
     public class ImagesService : IImagesService
     {
-        private readonly IProductsService productsService;
+        private readonly IRepository<Product> productsRepository;
         private readonly IHostingEnvironment host;
         private readonly IRepository<Image> imagesRepository;
 
-        public ImagesService(IProductsService productsService, IHostingEnvironment host, IRepository<Image> imagesRepository)
+        public ImagesService(IRepository<Product> productsRepository, IHostingEnvironment host, IRepository<Image> imagesRepository)
         {
-            this.productsService = productsService;
+            this.productsRepository = productsRepository;
             this.host = host;
             this.imagesRepository = imagesRepository;
         }
 
         public async void UploadImagesToProduct(int productId, List<IFormFile> files)
         {
-            var product = this.productsService.GetProductById<Product>(productId);
+            var product = this.productsRepository.All().FirstOrDefault(x => x.Id == productId);
 
             if (product == null)
             {

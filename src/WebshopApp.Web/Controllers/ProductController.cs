@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
 using WebshopApp.Web.Models;
@@ -13,11 +16,13 @@ namespace WebshopApp.Web.Controllers
     {
         private readonly IProductsService productsService;
         private readonly ICategoriesService categoriesService;
+        private readonly IImagesService imagesService;
 
-        public ProductController(IProductsService productsService, ICategoriesService categoriesService)
+        public ProductController(IProductsService productsService, ICategoriesService categoriesService, IImagesService imagesService)
         {
             this.productsService = productsService;
             this.categoriesService = categoriesService;
+            this.imagesService = imagesService;
         }
 
         public IActionResult Details(int id)
@@ -43,7 +48,7 @@ namespace WebshopApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditProductBindingModel model)
+        public async Task<IActionResult> Edit(EditProductBindingModel model, List<IFormFile> files)
         {
             if (!this.ModelState.IsValid)
             {
@@ -51,6 +56,8 @@ namespace WebshopApp.Web.Controllers
             }
 
             var id = await this.productsService.Edit(model.Id, model.CategoryId, model.Name, model.Description, model.Price);
+            this.imagesService.UploadImagesToProduct(model.Id, files);
+
             return this.RedirectToAction("Details", new { id = model.Id });
         }
 
@@ -75,6 +82,9 @@ namespace WebshopApp.Web.Controllers
             }
 
             var id = await this.productsService.Create(model.CategoryId, model.Name, model.Description, model.Price);
+            
+
+
             return this.RedirectToAction("Details", new { id = id });
         }
         

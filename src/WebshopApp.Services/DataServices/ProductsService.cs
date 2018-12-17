@@ -13,22 +13,21 @@ namespace WebshopApp.Services.DataServices
     {
         private readonly IRepository<Product> productsRepository;
 
-        public ProductsService(IRepository<Product> productsRepository)
+        public ProductsService(IRepository<Product> productsRepository, IImagesService imagesService)
         {
             this.productsRepository = productsRepository;
         }
 
         public IEnumerable<ProductViewModel> GetAll() => this.productsRepository.All().To<ProductViewModel>();
         
-        public async Task<int> Create(int categoryId, string name, string description, decimal price/*, byte[] image*/)
+        public async Task<int> Create(int categoryId, string name, string description, decimal price)
         {
             var product = new Product()
             {
                 CategoryId = categoryId,
                 Name = name,
                 Description = description,
-                Price = price,
-                //Image = image
+                Price = price
             };
 
             await this.productsRepository.AddAsync(product);
@@ -37,7 +36,7 @@ namespace WebshopApp.Services.DataServices
             return product.Id;
         }
 
-        public async Task<int> Edit(int id, int categoryId, string name, string description, decimal price/*, byte[] image*/)
+        public async Task<int> Edit(int id, int categoryId, string name, string description, decimal price)
         {
             var products = productsRepository.All();
 

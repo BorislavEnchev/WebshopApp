@@ -29,10 +29,14 @@ namespace WebshopApp.Services.DataServices
 
         public bool IsCategoryIdValid(int categoryId) => this.categoriesRepository.All().Any(x => x.Id == categoryId);
 
-        public int? GetCategoryId(string name)
+        public int GetCategoryId(string name)
         {
             var category = this.categoriesRepository.All().FirstOrDefault(x => x.Name == name);
-            return category?.Id;
+            if (category == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            return category.Id;
         }
 
         public IEnumerable<ProductViewModel> GetAllProductsFromCategory(int categoryId)
