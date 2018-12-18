@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using WebshopApp.Models;
 using WebshopApp.Services.MappingServices;
@@ -18,6 +19,8 @@ namespace WebshopApp.Services.Models
         public string Category { get; set; }
 
         public int CategoryId { get; set; }
+
+        public ICollection<Image> Images { get; set; }
 
         public string ImagePath { get; set; }
 

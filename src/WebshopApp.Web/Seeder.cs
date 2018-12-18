@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using WebshopApp.Data;
 using WebshopApp.Models;
 
@@ -30,6 +31,20 @@ namespace WebshopApp.Web
                 };
 
                 context.Blogs.Add(blog);
+            }
+
+            context.SaveChanges();
+        }
+
+        public static void SeedPictures(WebshopAppContext context)
+        {
+            var blogs = context.Blogs.Take(10).ToList();
+
+            for (int i = 1; i < 11; i++)
+            {
+                Blog blog = blogs.Skip(i - 1).First();
+
+                blog.PictureUri = $"images/products/{i}.jpg";
             }
 
             context.SaveChanges();

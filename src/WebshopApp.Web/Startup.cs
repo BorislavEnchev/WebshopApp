@@ -84,6 +84,7 @@ namespace WebshopApp.Web
                 app.UseHsts();
             }
             //Seeder.Seed(context);
+            Seeder.SeedPictures(context);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

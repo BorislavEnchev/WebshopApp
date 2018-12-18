@@ -12,6 +12,6 @@ namespace WebshopApp.Services.Models
 
         public DateTime PostedOn { get; set; }
 
-        //TODO: Image integration
+        public string PictureUri { get; set; }
     }
 }

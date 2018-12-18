@@ -15,8 +15,6 @@ namespace WebshopApp.Models
 
         public DateTime PostedOn { get; set; } = DateTime.UtcNow;
 
-        public int? ImageId { get; set; }
-
-        public virtual Image Image { get; set; }
+        public string PictureUri { get; set; }
     }
 }
