@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using WebshopApp.Models.Base;
 
 namespace WebshopApp.Models
@@ -11,5 +12,11 @@ namespace WebshopApp.Models
         [Required]
         [MinLength(50)]
         public string Content { get; set; }
+
+        public DateTime PostedOn { get; set; } = DateTime.UtcNow;
+
+        public int? ImageId { get; set; }
+
+        public virtual Image Image { get; set; }
     }
 }

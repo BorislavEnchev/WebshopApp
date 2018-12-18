@@ -21,6 +21,17 @@ namespace WebshopApp.Web
                 context.Products.Add(product);
             }
 
+            for (int i = 0; i < 20; i++)
+            {
+                var blog = new Blog
+                {
+                    Title = $"BlogTitle{i}",
+                    Content = $"{i}{i}{i}{i}{i}{i}{i}{i}{i}{i}{i}{i}{i}{i} nqma takyv blog tova e voenno obuchenie. Vnimanie: Voenno Obuchenie. ALARM, Trevoga, Zaboga. Voenno obuchenie sssssssssssssssssssssss"
+                };
+
+                context.Blogs.Add(blog);
+            }
+
             context.SaveChanges();
         }
     }

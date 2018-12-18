@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebshopApp.Web</title>
+    <title>@ViewData["Title"] - WebshopApplication</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/css/reset-css.css" />
@@ -29,7 +29,9 @@
                 <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                 <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                <li><div class="dropdown">
+                <li><a class="nav-link" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a></li>
+                <li>
+                    <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Create
                         </button>

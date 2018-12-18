@@ -58,6 +58,7 @@ namespace WebshopApp.Web
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
             services.AddScoped<IImagesService, ImagesService>();
+            services.AddScoped<IBlogsService, BlogsService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
