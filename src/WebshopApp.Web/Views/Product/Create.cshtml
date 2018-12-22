@@ -33,11 +33,11 @@
                 <select asp-items="categories" asp-for="CategoryId" class="form-control"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
                 <input asp-for="Image" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="container">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -47,12 +47,12 @@
                                 <a><span class="btn btn-default btn-file"> Browse… <input type="file" id="imgInp"></span></a>
                             </span>
                         </div>
-                        <img id='img-upload'/>
+                        @*<img id='img-upload'/>*@
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-dark btn-default" />
             </div>
         </form>
     </div>

@@ -50,13 +50,13 @@ namespace WebshopApp.Services.DataServices
                     await file.CopyToAsync(stream);
                 }
 
-                var photo = new Image
+                var image = new Image
                 {
                     FileName = fileName,
                     ProductId = product.Id
                 };
 
-                product.Images.Add(photo);
+                product.Images.Add(image);
 
                 await this.imagesRepository.SaveChangesAsync();
             }

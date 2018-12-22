@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //var picture = Model.Images.FirstOrDefault().FileName;
 }
 
 <title>Product Details</title>
@@ -36,9 +37,9 @@
                 @Html.DisplayNameFor(model => model.ImagePath)
             </dt>
             <dd>
-                <div>
-                    <image src="@Model.ImagePath"></image>
-                </div>
+                @*<div>
+                    <image src="@picture"></image>
+                </div>*@
                 @Html.DisplayFor(model => model.ImagePath)
             </dd>
         </dl>

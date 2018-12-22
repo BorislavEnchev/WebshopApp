@@ -74,7 +74,7 @@ namespace WebshopApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductInputModel model)
+        public async Task<IActionResult> Create(CreateProductInputModel model, List<IFormFile> files)
         {
             if (!this.ModelState.IsValid)
             {
@@ -82,6 +82,7 @@ namespace WebshopApp.Web.Controllers
             }
 
             var id = await this.productsService.Create(model.CategoryId, model.Name, model.Description, model.Price);
+            this.imagesService.UploadImagesToProduct(id, files);
 
             return this.RedirectToAction("Details", new { id = id });
         }
