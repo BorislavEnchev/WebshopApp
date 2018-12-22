@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
 
@@ -27,6 +29,24 @@ namespace WebshopApp.Web.Controllers
             }
 
             return this.View(viewModels);
+        }
+
+        public IActionResult Create()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateBlogInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            var id = await this.blogsService.Create(model.Title, model.Content);
+
+            return this.RedirectToAction("Details", new { id = id });
         }
     }
 }

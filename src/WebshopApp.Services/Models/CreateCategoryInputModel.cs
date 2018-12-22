@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebshopApp.Web.Models
+namespace WebshopApp.Services.Models
 {
     public class CreateCategoryInputModel
     {

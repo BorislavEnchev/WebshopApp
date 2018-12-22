@@ -4,7 +4,7 @@ using WebshopApp.Services.Models;
 
 namespace WebshopApp.Web.Models
 {
-    public class CreateProductBindingModel : IMapFrom<ProductViewModel>
+    public class CreateProductInputModel : IMapFrom<ProductViewModel>
     {
         [Required]
         [MinLength(5)]

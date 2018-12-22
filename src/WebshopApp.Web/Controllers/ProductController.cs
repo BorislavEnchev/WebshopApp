@@ -74,7 +74,7 @@ namespace WebshopApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductBindingModel model)
+        public async Task<IActionResult> Create(CreateProductInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -82,8 +82,6 @@ namespace WebshopApp.Web.Controllers
             }
 
             var id = await this.productsService.Create(model.CategoryId, model.Name, model.Description, model.Price);
-            
-
 
             return this.RedirectToAction("Details", new { id = id });
         }

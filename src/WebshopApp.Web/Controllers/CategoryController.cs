@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
 
@@ -33,6 +33,19 @@ namespace WebshopApp.Web.Controllers
             var products = this.categoriesService.GetAllProductsFromCategory(id).ToList();
 
             return this.View(products);
+        }
+
+        public IActionResult Create()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string name)
+        {
+            await this.categoriesService.Create(name);
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

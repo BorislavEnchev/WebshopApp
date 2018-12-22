@@ -12,8 +12,8 @@ namespace WebshopApp.Services.DataServices
 {
     public class ImagesService : IImagesService
     {
-        private readonly IRepository<Product> productsRepository;
         private readonly IHostingEnvironment host;
+        private readonly IRepository<Product> productsRepository;
         private readonly IRepository<Image> imagesRepository;
 
         public ImagesService(IRepository<Product> productsRepository, IHostingEnvironment host, IRepository<Image> imagesRepository)

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WebshopApp.Data;
 using WebshopApp.Models;
 
@@ -48,6 +50,44 @@ namespace WebshopApp.Web
             }
 
             context.SaveChanges();
+        }
+
+        public static async void SeedRoles(WebshopAppContext context)
+        {
+            var roleStore = new RoleStore<IdentityRole>(context);
+
+            if (!context.Roles.Any(r => r.Name == "admin"))
+            {
+                await roleStore.CreateAsync(new IdentityRole { Name = "admin", NormalizedName = "admin" });
+            }
+
+            if (!context.Roles.Any(r => r.Name == "user"))
+            {
+                await roleStore.CreateAsync(new IdentityRole { Name = "user", NormalizedName = "user" });
+            }
+
+            var adminUser = context.Users.FirstOrDefault(x => x.UserName == "robko@admin.com") ?? new WebshopAppUser
+            {
+                UserName = "robko@admin.com",
+                NormalizedUserName = "ROBKO@ADMIN.COM",
+                Email = "asd@asd.com",
+                NormalizedEmail = "ASD@ASD.COM",
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            if (!context.Users.Any(u => u.UserName == adminUser.UserName))
+            {
+                var password = new PasswordHasher<WebshopAppUser>();
+                var hashed = password.HashPassword(adminUser, "kamenica");
+                adminUser.PasswordHash = hashed;
+                var userStore = new UserStore<WebshopAppUser>(context);
+                await userStore.CreateAsync(adminUser);
+                await userStore.AddToRoleAsync(adminUser, "admin");
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

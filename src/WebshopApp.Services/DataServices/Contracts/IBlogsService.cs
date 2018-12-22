@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebshopApp.Services.Models;
 
 namespace WebshopApp.Services.DataServices.Contracts
@@ -6,6 +8,8 @@ namespace WebshopApp.Services.DataServices.Contracts
     public interface IBlogsService
     {
         IEnumerable<BlogViewModel> GetAll();
+
+        Task<int> Create(string title, string content);
 
         //bool IsCategoryIdValid(int categoryId);
 

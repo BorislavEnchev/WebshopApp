@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
@@ -25,6 +26,19 @@ namespace WebshopApp.Services.DataServices
                 .To<CategoryViewModel>().ToList();
 
             return categories;
+        }
+        
+        public async Task<int> Create(string name)
+        {
+            var category = new Category
+            {
+                Name = name
+            };
+
+            await this.categoriesRepository.AddAsync(category);
+            await this.categoriesRepository.SaveChangesAsync();
+
+            return category.Id;
         }
 
         public bool IsCategoryIdValid(int categoryId) => this.categoriesRepository.All().Any(x => x.Id == categoryId);
