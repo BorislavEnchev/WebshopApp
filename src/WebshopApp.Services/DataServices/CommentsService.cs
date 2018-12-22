@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
+using WebshopApp.Services.MappingServices;
+using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Services.DataServices
 {
@@ -14,6 +16,13 @@ namespace WebshopApp.Services.DataServices
         public CommentsService(IRepository<Comment> commentsRepository)
         {
             this.commentsRepository = commentsRepository;
+        }
+
+        public IEnumerable<CommentViewModel> GetAll()
+        {
+            var models = this.commentsRepository.All().To<CommentViewModel>();
+
+            return models;
         }
 
         public async Task<int> Add(int userId, int productId, string content)

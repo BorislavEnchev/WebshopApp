@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.DataServices.Contracts;
-using WebshopApp.Services.Models;
 using WebshopApp.Services.Models.InputModels;
 using WebshopApp.Services.Models.ViewModels;
 
@@ -12,10 +11,12 @@ namespace WebshopApp.Web.Controllers
     public class BlogController : BaseController
     {
         private readonly IBlogsService blogsService;
+        private readonly ICommentsService commentsService;
 
-        public BlogController(IBlogsService blogsService)
+        public BlogController(IBlogsService blogsService, ICommentsService commentsService)
         {
             this.blogsService = blogsService;
+            this.commentsService = commentsService;
         }
 
         public IActionResult Index()
@@ -37,7 +38,7 @@ namespace WebshopApp.Web.Controllers
             return this.View();
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> Create(CreateBlogInputModel model)
         {
             if (!this.ModelState.IsValid)
@@ -56,5 +57,11 @@ namespace WebshopApp.Web.Controllers
 
             return this.View(blog);
         }
+
+        //public IActionResult Comments(int? id)
+        //{
+        //    var comments = commentsService.GetAll().Where(x => x.ProductId == id).ToArray();
+        //    return Json(comments, JsonRequestBehavior.AllowGet);
+        //}
     }
 }
