@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
+using WebshopApp.Services.Models.InputModels;
+using WebshopApp.Services.Models.ViewModels;
 using WebshopApp.Web.Models;
-using CreateProductInputModel = WebshopApp.Services.Models.CreateProductInputModel;
+using CreateProductInputModel = WebshopApp.Services.Models.InputModels.CreateProductInputModel;
 
 namespace WebshopApp.Web.Controllers
 {

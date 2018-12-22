@@ -13,6 +13,7 @@ using WebshopApp.Services.DataServices;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.MappingServices;
 using WebshopApp.Services.Models;
+using WebshopApp.Services.Models.ViewModels;
 using WebshopApp.Web.Models;
 
 namespace WebshopApp.Web

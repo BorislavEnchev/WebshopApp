@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
+using WebshopApp.Services.Models.InputModels;
+using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Web.Controllers
 {

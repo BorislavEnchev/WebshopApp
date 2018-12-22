@@ -9,6 +9,7 @@ using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.MappingServices;
 using WebshopApp.Services.Models;
+using WebshopApp.Services.Models.ViewModels;
 using Xunit;
 
 namespace WebshopApp.Services.DataServices.Tests

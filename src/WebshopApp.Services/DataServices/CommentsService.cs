@@ -16,7 +16,7 @@ namespace WebshopApp.Services.DataServices
             this.commentsRepository = commentsRepository;
         }
 
-        public async Task<int> Create(int userId, int productId, string content)
+        public async Task<int> Add(int userId, int productId, string content)
         {
             var comment = new Comment()
             {

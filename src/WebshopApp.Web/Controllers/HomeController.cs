@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebshopApp.Services.DataServices;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
+using WebshopApp.Services.Models.ViewModels;
 using WebshopApp.Web.Models;
 using X.PagedList;
 

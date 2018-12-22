@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebshopApp.Services.Models;
+using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Services.DataServices.Contracts
 {
