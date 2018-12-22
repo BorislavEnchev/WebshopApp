@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
@@ -33,6 +34,13 @@ namespace WebshopApp.Services.DataServices
             await this.blogsRepository.SaveChangesAsync();
 
             return blog.Id;
+        }
+
+        public TViewModel GetBlogById<TViewModel>(int id)
+        {
+            var blog = blogsRepository.All().Where(x => x.Id == id).To<TViewModel>().FirstOrDefault();
+
+            return blog;
         }
     }
 }

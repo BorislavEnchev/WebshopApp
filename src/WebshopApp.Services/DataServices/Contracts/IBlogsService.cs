@@ -11,6 +11,8 @@ namespace WebshopApp.Services.DataServices.Contracts
 
         Task<int> Create(string title, string content);
 
+        TViewModel GetBlogById<TViewModel>(int id);
+
         //bool IsCategoryIdValid(int categoryId);
 
         //int GetCategoryId(string name);

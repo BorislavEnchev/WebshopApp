@@ -4,7 +4,7 @@ using WebshopApp.Services.MappingServices;
 
 namespace WebshopApp.Services.Models
 {
-    public class BlogViewModel : IMapFrom<Blog>
+    public class BlogViewModel : IMapFrom<Blog>, IMapFrom<CreateBlogInputModel>
     {
         public string Title { get; set; }
 

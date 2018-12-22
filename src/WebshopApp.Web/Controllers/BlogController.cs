@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
 
@@ -46,7 +45,14 @@ namespace WebshopApp.Web.Controllers
 
             var id = await this.blogsService.Create(model.Title, model.Content);
 
-            return this.RedirectToAction("Details", new { id = id });
+            return this.RedirectToAction("Details", "Blog", new { id = id });
+        }
+
+        public IActionResult Details(int id)
+        {
+            var blog = this.blogsService.GetBlogById<BlogViewModel>(id);
+
+            return this.View(blog);
         }
     }
 }
