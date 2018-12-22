@@ -1,4 +1,4 @@
-﻿@model WebshopApp.Web.Models.EditProductBindingModel
+﻿@model WebshopApp.Services.Models.EditProductInputModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -34,14 +34,14 @@
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="col-12 col-lg-6">
-                <div class="single_product_thumb">
-                    <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+                <div class="img-thumbnail">
+                    <div id="product_details_slider" class="carousel" data-ride="carousel">
                         <a style="background-image: url(../../wwwroot/images/@Model.Image">
                         </a>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <a class="image-thumbnail">
-                                    <img class="image-thumbnail" src="~/images/@Model.Image" alt="First slide">
+                                <a class="img-thumbnail">
+                                    <img class="img-thumbnail" src="~/images/@Model.Image" alt="First slide">
                                 </a>
                             </div>
                         </div>

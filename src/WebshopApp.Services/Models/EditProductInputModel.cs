@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WebshopApp.Services.MappingServices;
-using WebshopApp.Services.Models;
 
-namespace WebshopApp.Web.Models
+namespace WebshopApp.Services.Models
 {
-    public class CreateProductInputModel : IMapFrom<ProductViewModel>
+    public class EditProductInputModel : IMapFrom<ProductViewModel>
     {
+        [Required]
+        public int Id { get; set; }
+
         [Required]
         [MinLength(5)]
         public string Name { get; set; }
@@ -20,6 +22,6 @@ namespace WebshopApp.Web.Models
         [Required]
         public int CategoryId { get; set; }
 
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }

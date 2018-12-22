@@ -9,6 +9,7 @@ using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models;
 using WebshopApp.Web.Models;
+using CreateProductInputModel = WebshopApp.Services.Models.CreateProductInputModel;
 
 namespace WebshopApp.Web.Controllers
 {
@@ -42,13 +43,13 @@ namespace WebshopApp.Web.Controllers
                     Text = x.Name,
                 });
 
-            var product = this.productsService.GetProductById<EditProductBindingModel>(id);
+            var product = this.productsService.GetProductById<EditProductInputModel>(id);
 
             return this.View(product);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditProductBindingModel model, List<IFormFile> files)
+        public async Task<IActionResult> Edit(EditProductInputModel model, List<IFormFile> files)
         {
             if (!this.ModelState.IsValid)
             {

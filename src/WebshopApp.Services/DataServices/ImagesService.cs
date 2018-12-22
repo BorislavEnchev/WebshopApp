@@ -56,8 +56,11 @@ namespace WebshopApp.Services.DataServices
                     ProductId = product.Id
                 };
 
+                await this.imagesRepository.AddAsync(image);
+
                 product.Images.Add(image);
 
+                await this.productsRepository.SaveChangesAsync();
                 await this.imagesRepository.SaveChangesAsync();
             }
         }
