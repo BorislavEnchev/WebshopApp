@@ -1,6 +1,4 @@
-﻿@using X.PagedList
-@using X.PagedList.Mvc.Core
-@model IEnumerable<WebshopApp.Services.Models.ViewModels.ProductViewModel>
+﻿@model IEnumerable<WebshopApp.Services.Models.ViewModels.ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -50,25 +48,10 @@
             <div class="row">
                 @foreach (var product in Model)
                 {
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">@product.Name</a>
-                                </h4>
-                                <h5>$@product.Price</h5>
-                                <p class="card-text">@product.Description</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                            </div>
-                        </div>
-                    </div>
+                @await Html.PartialAsync("_ProductPartial", product);
+                    
                 }
             </div>
-            
-            @*@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))*@
             <!-- /.row -->
         </div>
         <!-- /.col-lg-9 -->

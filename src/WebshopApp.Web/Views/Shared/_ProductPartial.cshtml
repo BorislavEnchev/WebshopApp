@@ -1,0 +1,22 @@
+﻿@model WebshopApp.Services.Models.ViewModels.ProductViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+        @if (Model.Images.Count != 0)
+        {
+            <a href="#"><img class="card-img-top" src="~/images/products/@Model.Images.First().FileName" alt="image"></a>
+        }
+        <div class="card-body">
+            <h4 class="card-title">
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a>
+            </h4>
+            <h5>$@Model.Price</h5>
+            <p class="card-text">@Model.Description</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+        </div>
+    </div>
+</div>
