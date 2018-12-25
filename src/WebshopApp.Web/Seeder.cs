@@ -89,5 +89,17 @@ namespace WebshopApp.Web
 
             await context.SaveChangesAsync();
         }
+
+        public static async void AddQuantityOfProducts(WebshopAppContext context)
+        {
+            var products = context.Products.ToList();
+
+            foreach (var product in products)
+            {
+                product.Quantity = new Random().Next(10, 50);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

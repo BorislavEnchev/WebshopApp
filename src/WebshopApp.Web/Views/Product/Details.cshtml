@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //var picture = Model.Images.FirstOrDefault().FileName;
 }
 
 <title>Product Details</title>
@@ -34,17 +33,15 @@
                 @Html.DisplayFor(model => model.Price)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.ImagePath)
+                @Html.DisplayFor(model => model.ImagePath);
             </dt>
             <dd>
-                @*<div>
-                    <image src="@picture"></image>
-                </div>*@
-                @Html.DisplayFor(model => model.ImagePath)
+                <img src="@Model.ImagePath" width="60"/>
             </dd>
         </dl>
         <hr />
         <div class="text-center justify-content-around">
+            <a class="btn-dark btn-primary btn-lg" asp-controller="ShoppingCart" asp-action="Buy" asp-route-id="@Model.Id" role="button">Add to cart</a>
             <a class="btn-dark btn-primary btn-lg" asp-controller="Comment" asp-action="Add" asp-route-id="@Model.Id" role="button">Comment</a>
             <a class="btn-dark btn-primary btn-lg" asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" role="button">Edit</a>
             <a class="btn-dark btn-primary btn-lg" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" role="button">Delete</a>

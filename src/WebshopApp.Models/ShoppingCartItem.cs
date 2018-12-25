@@ -10,6 +10,8 @@ namespace WebshopApp.Models
 
         public string ShoppingCartId { get; set; }
 
-        public ShoppingCart ShoppingCart { get; set; }
+        public virtual ShoppingCart ShoppingCart { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

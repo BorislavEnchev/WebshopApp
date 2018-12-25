@@ -31,8 +31,7 @@ namespace WebshopApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             AutoMapperConfig.RegisterMappings(
-                typeof(ProductViewModel).Assembly,
-                typeof(ProductsCollectionViewModel).Assembly
+                typeof(ProductViewModel).Assembly
             );
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -61,6 +60,8 @@ namespace WebshopApp.Web
             services.AddScoped<ICategoriesService, CategoriesService>();
             services.AddScoped<IImagesService, ImagesService>();
             services.AddScoped<IBlogsService, BlogsService>();
+            services.AddScoped<ICommentsService, CommentsService>();
+            services.AddSession();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
@@ -87,8 +88,10 @@ namespace WebshopApp.Web
             }
             //Seeder.Seed(context);
             //Seeder.SeedPictures(context);
-            Seeder.SeedRoles(context);
+            //Seeder.SeedRoles(context);
+            Seeder.AddQuantityOfProducts(context);
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

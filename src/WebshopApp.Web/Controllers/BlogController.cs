@@ -38,7 +38,7 @@ namespace WebshopApp.Web.Controllers
             return this.View();
         }
 
-        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateBlogInputModel model)
         {
             if (!this.ModelState.IsValid)

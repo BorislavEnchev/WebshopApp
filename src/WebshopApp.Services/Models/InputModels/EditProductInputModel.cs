@@ -24,6 +24,6 @@ namespace WebshopApp.Services.Models.InputModels
         [Required]
         public int CategoryId { get; set; }
 
-        public ICollection<ImageViewModel> Image { get; set; }
+        public ICollection<ImageViewModel> Images { get; set; }
     }
 }

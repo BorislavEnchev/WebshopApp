@@ -1,56 +1,82 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using WebshopApp.Data;
+using Microsoft.AspNetCore.Mvc;
+using WebshopApp.Data.Common;
 using WebshopApp.Models;
+using WebshopApp.Web.Helpers;
 
 namespace WebshopApp.Web.Controllers
 {
     public class ShoppingCartController : BaseController
     {
-        private const string SessionKey = "CartId";
+        private readonly IRepository<Product> productsRepository;
 
-        public ShoppingCartController()
+        public ShoppingCartController(IRepository<Product> productsRepository)
         {
-            
+            this.productsRepository = productsRepository;
         }
 
-        public static ShoppingCart GetCart(IServiceProvider services)
+        public IActionResult Index()
         {
-            ISession session = services.GetRequiredService<IHttpContextAccessor>()?
-                .HttpContext.Session;
-            
-            string cartId = session.GetString(SessionKey) ?? Guid.NewGuid().ToString();
-
-            session.SetString(SessionKey, cartId);
-
-            return new ShoppingCart() { Id = cartId };
+            var cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart");
+            ViewBag.cart = cart;
+            ViewBag.total = cart.Sum(item => item.Product.Price * item.Quantity);
+            return View();
+        }
+        
+        public IActionResult Buy(int id)
+        {
+            if (SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart") == null)
+            {
+                List<ShoppingCartItem> cart = new List<ShoppingCartItem>();
+                cart.Add(new ShoppingCartItem
+                {
+                    Product = productsRepository.All().Where(x => x.Id == id).SingleOrDefault(),
+                    Quantity = 1 
+                });
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            }
+            else
+            {
+                List<ShoppingCartItem> cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart");
+                int index = isExist(id);
+                if (index != -1)
+                {
+                    cart[index].Quantity++;
+                }
+                else
+                {
+                    cart.Add(new ShoppingCartItem
+                    {
+                        Product = productsRepository.All().Where(x => x.Id == id).SingleOrDefault(),
+                        Quantity = 1
+                    });
+                }
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            }
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+        
+        public IActionResult Remove(int id)
+        {
+            List<ShoppingCartItem> cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart");
+            int index = isExist(id);
+            cart.RemoveAt(index);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            return RedirectToAction("Index", "ShoppingCart");
         }
 
-        //public void AddToCart(Product product, int amount)
-        //{
-        //    var shoppingCartItem =
-        //        context.ShoppingCartItems.SingleOrDefault(
-        //            s => s.Product.Id == product.Id && s.ShoppingCartId == ShoppingCartId);
-
-        //    if (shoppingCartItem == null)
-        //    {
-        //        shoppingCartItem = new ShoppingCartItem
-        //        {
-        //            ShoppingCartId = ShoppingCartId,
-        //            Product = product,
-        //        };
-
-        //        context.ShoppingCartItems.Add(shoppingCartItem);
-        //    }
-        //    else
-        //    {
-        //        shoppingCartItem.Amount++;
-        //    }
-        //    context.SaveChanges();
-        //}
+        private int isExist(int id)
+        {
+            List<ShoppingCartItem> cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart");
+            for (int i = 0; i < cart.Count; i++)
+            {
+                if (cart[i].Product.Id.Equals(id))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
 }
