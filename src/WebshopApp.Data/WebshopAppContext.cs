@@ -23,7 +23,7 @@ namespace WebshopApp.Data
 
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<WebshopAppUser> WebshopAppUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

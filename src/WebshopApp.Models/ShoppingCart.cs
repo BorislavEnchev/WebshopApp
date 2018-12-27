@@ -3,6 +3,7 @@ using WebshopApp.Models.Base;
 
 namespace WebshopApp.Models
 {
+    // Not used in the code yet.
     public class ShoppingCart : BaseModel<string>
     {
         public ShoppingCart()

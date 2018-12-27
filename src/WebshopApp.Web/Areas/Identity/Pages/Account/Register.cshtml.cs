@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using WebshopApp.Models;
 
+
 namespace WebshopApp.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -19,18 +21,21 @@ namespace WebshopApp.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<WebshopAppUser> _signInManager;
         private readonly UserManager<WebshopAppUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<WebshopAppUser> userManager,
             SignInManager<WebshopAppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            RoleManager<IdentityRole> roleManager
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            _roleManager = roleManager;
+            //_emailSender = emailSender;
         }
 
         [BindProperty]
@@ -40,6 +45,10 @@ namespace WebshopApp.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -55,6 +64,8 @@ namespace WebshopApp.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string Role { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -67,10 +78,16 @@ namespace WebshopApp.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new WebshopAppUser { UserName = Input.Email, Email = Input.Email };
+                Input.Role = _signInManager.UserManager.Users.Any() ? "User" : "Admin";
+                var role = _roleManager.Roles.FirstOrDefault(r => r.Name == Input.Role);
+
+                var user = new WebshopAppUser { UserName = Input.Username, Email = Input.Email, Role = role?.Name, RoleId = role?.Id };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
+                    result = await _userManager.AddToRoleAsync(user, Input.Role);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -80,8 +97,8 @@ namespace WebshopApp.Web.Areas.Identity.Pages.Account
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);

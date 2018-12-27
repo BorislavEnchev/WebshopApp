@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using WebshopApp.Data;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
@@ -45,7 +50,7 @@ namespace WebshopApp.Web
                 options.UseSqlServer(
                     this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<WebshopAppUser>(op =>
+            services.AddIdentity<WebshopAppUser, IdentityRole>(op =>
                 {
                     op.Password.RequireDigit = false;
                     op.Password.RequiredLength = 3;
@@ -53,7 +58,8 @@ namespace WebshopApp.Web
                     op.Password.RequireNonAlphanumeric = false;
                     op.Password.RequireLowercase = false;
                 })
-                .AddEntityFrameworkStores<WebshopAppContext>();
+                .AddEntityFrameworkStores<WebshopAppContext>()
+                .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddScoped<IProductsService, ProductsService>();
@@ -63,13 +69,37 @@ namespace WebshopApp.Web
             services.AddScoped<ICommentsService, CommentsService>();
             services.AddSession();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.Expiration = TimeSpan.FromMinutes(5);
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
             services.AddAuthentication()
                 .AddFacebook(facebookOptions =>
                 {
                     facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                     facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                    facebookOptions.Validate("Facebook");
+                    facebookOptions.Events = new OAuthEvents
+                    {
+                        OnRemoteFailure = ctx =>
+                        {
+                            ctx.Response.Redirect("/Identity/Error?ErrorMessage=" + UrlEncoder.Default.Encode(ctx.Failure.Message));
+                            ctx.HandleResponse();
+                            return Task.FromResult(0);
+                        }
+                    };
                 });
         }
 
@@ -88,7 +118,7 @@ namespace WebshopApp.Web
             }
             //Seeder.Seed(context);
             //Seeder.SeedPictures(context);
-            //Seeder.SeedRoles(context);
+            Seeder.SeedRoles(context);
             //Seeder.AddQuantityOfProducts(context);
             app.UseHttpsRedirection();
             app.UseSession();
