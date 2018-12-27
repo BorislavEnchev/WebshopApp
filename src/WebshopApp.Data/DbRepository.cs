@@ -28,13 +28,21 @@ namespace WebshopApp.Data
             return this.dbSet;
         }
 
-        public void Delete(TEntity entity)
+        public async Task<int> Delete(TEntity entity)
         {
             this.dbSet.Remove(entity);
+            var result = await this.context.SaveChangesAsync();
+            return result;
         }
 
         public Task<int> SaveChangesAsync()
         {
+            return this.context.SaveChangesAsync();
+        }
+
+        public Task<int> Update(TEntity entity)
+        {
+            this.dbSet.Update(entity);
             return this.context.SaveChangesAsync();
         }
 

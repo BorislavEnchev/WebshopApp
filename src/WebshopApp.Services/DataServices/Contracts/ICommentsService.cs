@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebshopApp.Services.Models.InputModels;
 using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Services.DataServices.Contracts
@@ -8,10 +9,14 @@ namespace WebshopApp.Services.DataServices.Contracts
     {
         IEnumerable<CommentViewModel> GetAll();
 
-        Task<int> Add(int userId, int productId, string content);
+        IEnumerable<CommentViewModel> GetAllByProduct(int id);
 
-        Task<int> Edit(int id, int userId, int productId, string content);
+        Task<int> Add(CreateCommentInputModel model);
 
-        void Delete(int id);
+        Task<int> Edit(CommentViewModel model);
+
+        Task<int> Delete(int id);
+
+        CommentViewModel GetById(int id);
     }
 }

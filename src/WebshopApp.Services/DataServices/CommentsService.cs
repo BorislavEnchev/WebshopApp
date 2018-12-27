@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.MappingServices;
+using WebshopApp.Services.Models.InputModels;
 using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Services.DataServices
@@ -25,53 +27,72 @@ namespace WebshopApp.Services.DataServices
             return models;
         }
 
-        public async Task<int> Add(int userId, int productId, string content)
+        public IEnumerable<CommentViewModel> GetAllByProduct(int id)
         {
-            var comment = new Comment()
+            var models = this.commentsRepository.All()
+                .Where(c => c.ProductId == id)
+                .To<CommentViewModel>();
+
+            return models;
+        }
+
+        public async Task<int> Add(CreateCommentInputModel model)
+        {
+            var comment = new Comment
             {
-                UserId = userId,
-                ProductId = productId,
-                Content = content
+                Content = model.Content,
+                ProductId = model.ProductId,
+                UserId = model.UserId
             };
 
             await this.commentsRepository.AddAsync(comment);
             await this.commentsRepository.SaveChangesAsync();
 
+            var id = commentsRepository.All().Single(c => c.Content.Equals(model.Content)).Id;
+
+            return id;
+        }
+
+        public async Task<int> Edit(CommentViewModel model)
+        {
+            var comment = commentsRepository.All()
+                .FirstOrDefault(x => x.Id == model.Id); ;
+
+            if (comment == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            
+            comment.Content = model.Content;
+
+            var id = await this.commentsRepository.Update(comment);
+
             return comment.Id;
         }
 
-        public async Task<int> Edit(int id, int userId, int productId, string content)
+        public async Task<int> Delete(int id)
         {
-            var comments = commentsRepository.All();
-
-            var comment = comments.FirstOrDefault(x => x.Id == id);
+            var comment = this.commentsRepository.All()
+                .FirstOrDefault(c => c.Id == id);
 
             if (comment == null)
             {
                 throw new KeyNotFoundException();
             }
 
-            comment.Id = id;
-            comment.ProductId = productId;
-            comment.UserId = userId;
-            comment.Content = content;
+            var index = await this.commentsRepository.Delete(comment);
 
-            await this.commentsRepository.SaveChangesAsync();
-
-            return comment.Id;
+            return index;
         }
 
-        public void Delete(int id)
+        public CommentViewModel GetById(int id)
         {
-            var comment = this.commentsRepository.All().FirstOrDefault(x => x.Id == id);
+            var model = commentsRepository.All()
+                .Where(c => c.Id == id)
+                .To<CommentViewModel>()
+                .FirstOrDefault();
 
-            if (comment == null)
-            {
-                throw new KeyNotFoundException();
-            }
-
-            this.commentsRepository.Delete(comment);
-            this.commentsRepository.SaveChangesAsync();
+            return model;
         }
     }
 }

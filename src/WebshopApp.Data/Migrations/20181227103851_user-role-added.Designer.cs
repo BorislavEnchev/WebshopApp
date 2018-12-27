@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebshopApp.Data;
 
 namespace WebshopApp.Data.Migrations
 {
     [DbContext(typeof(WebshopAppContext))]
-    partial class WebshopAppContextModelSnapshot : ModelSnapshot
+    [Migration("20181227103851_user-role-added")]
+    partial class userroleadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

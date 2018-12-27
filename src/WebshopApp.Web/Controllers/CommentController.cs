@@ -1,7 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.Models.InputModels;
+using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Web.Controllers
 {
@@ -9,14 +13,22 @@ namespace WebshopApp.Web.Controllers
     {
         private readonly ICommentsService commentsService;
 
-        public CommentController(ICommentsService commentsService)
+        private readonly UserManager<WebshopAppUser> _userManager;
+
+        public CommentController(ICommentsService commentsService, UserManager<WebshopAppUser> userManager)
         {
             this.commentsService = commentsService;
+            _userManager = userManager;
         }
 
-        public IActionResult Add()
+        public IActionResult Add(int id)
         {
-            return this.View();
+            var model = new CreateCommentInputModel
+            {
+                ProductId = id,
+                UserId = _userManager.GetUserId(User)
+            };
+            return this.View(model);
         }
 
         [HttpPost]
@@ -27,9 +39,58 @@ namespace WebshopApp.Web.Controllers
                 return this.View(model);
             }
 
-            var id = await this.commentsService.Add(model.UserId, model.ProductId, model.Content);
+            var id = await this.commentsService.Add(model);
 
-            return this.RedirectToAction("Details", "Product", id);
+            TempData["id"] = id;
+
+            return this.RedirectToAction("Details", new { id = id });
+        }
+
+        public IActionResult Details(int id)
+        {
+            var model = commentsService.GetById(id);
+
+            return View(model);
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var model = commentsService.GetById(id);
+            if (!ModelState.IsValid || !model.User.UserName.Equals(User.Identity.Name))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(CommentViewModel model)
+        {
+            var id = await commentsService.Edit(model);
+
+            return RedirectToAction("Details", new { id = id });
+        }
+
+
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = commentsService.GetById(id);
+            if (!ModelState.IsValid || !model.User.UserName.Equals(User.Identity.Name))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var result = await commentsService.Delete(id);
+
+            return RedirectToAction("Deleted");
+        }
+
+        public IActionResult Deleted()
+        {
+            return View();
         }
     }
 }

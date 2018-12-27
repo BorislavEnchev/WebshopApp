@@ -6,10 +6,14 @@ namespace WebshopApp.Services.Models.ViewModels
 {
     public class CommentViewModel : IMapFrom<Comment>, IMapTo<CreateCommentInputModel>
     {
+        public int Id { get; set; }
+
         public string Content { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        public virtual WebshopAppUser User { get; set; }
 
         public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

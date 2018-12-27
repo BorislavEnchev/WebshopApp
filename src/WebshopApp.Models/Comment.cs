@@ -8,11 +8,13 @@ namespace WebshopApp.Models
         [Required]
         public string Content { get; set; }
 
+        [Required]
         public int ProductId { get; set; }
 
         public virtual Product Product { get; set; }
 
-        public int UserId { get; set; }
+        [Required]
+        public string UserId { get; set; }
 
         public virtual WebshopAppUser User { get; set; }
     }

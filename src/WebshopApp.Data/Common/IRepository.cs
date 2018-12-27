@@ -10,8 +10,10 @@ namespace WebshopApp.Data.Common
 
         Task AddAsync(TEntity entity);
 
-        void Delete(TEntity entity);
+        Task<int> Delete(TEntity entity);
 
         Task<int> SaveChangesAsync();
+
+        Task<int> Update(TEntity entity);
     }
 }

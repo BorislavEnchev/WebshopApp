@@ -89,7 +89,7 @@ namespace WebshopApp.Web
             //Seeder.Seed(context);
             //Seeder.SeedPictures(context);
             //Seeder.SeedRoles(context);
-            Seeder.AddQuantityOfProducts(context);
+            //Seeder.AddQuantityOfProducts(context);
             app.UseHttpsRedirection();
             app.UseSession();
             app.UseStaticFiles();
