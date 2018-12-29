@@ -9,6 +9,7 @@ namespace WebshopApp.Services.DataServices.Tests
         public MapperConfiguration()
         {
             CreateMap<ProductViewModel, Product>().ReverseMap();
+            CreateMap<Product, Product>().ReverseMap();
         }
     }
 }

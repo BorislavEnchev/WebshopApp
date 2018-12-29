@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Shouldly;
@@ -17,7 +18,7 @@ using Xunit;
 
 namespace WebshopApp.Services.DataServices.Tests
 {
-    public class ProductsServiceTests : FakeServices
+    public class ProductsServiceTests
     {
         // RUN ALL TEST SEPARATED!
         public Product[] GetTestData()
@@ -57,11 +58,10 @@ namespace WebshopApp.Services.DataServices.Tests
             repo.Setup(x => x.All()).Returns(products);
             var service = new ProductsService(repo.Object, null);
             
-            //act
+            //do
             var result = service.GetAllProducts();
 
             //assert
-
             Assert.Equal(2, result.Count());
         }
 
@@ -82,12 +82,29 @@ namespace WebshopApp.Services.DataServices.Tests
             repo.Setup(x => x.AddAsync(product));
             var service = new ProductsService(repo.Object, null);
 
-            //act
+            //do
             var result = service.Create(1, "product", "123", 11.11m);
 
             //assert
+            result.Should().NotBeNull();
+        }
 
-            result.ShouldNotBeNull();
+        [Fact]
+        public void GetProductById_ShouldReturnProduct()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
+
+            var products = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(products);
+            var service = new ProductsService(repo.Object, null);
+
+            //do
+            var id = service.GetAllProducts().Select(x => x.Id).FirstOrDefault();
+            var result = service.GetProductById<Product>(id);
+
+            //assert
+            result.Should().NotBeNull();
         }
     }
 }
