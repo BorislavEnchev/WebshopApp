@@ -6,19 +6,24 @@ using Microsoft.Extensions.DependencyInjection;
 using WebshopApp.Data;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
+using WebshopApp.Services.MappingServices;
+using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Services.DataServices.Tests
 {
     public class FakeServices
     {
-        protected IServiceProvider ServiceProvider { get; set; }
+        protected IServiceProvider Provider { get; set; }
 
         protected WebshopAppContext Context { get; set; }
-        
-        public FakeServices(IServiceProvider serviceProvider, WebshopAppContext context)
+
+        public void SetUp()
         {
-            ServiceProvider = serviceProvider;
-            this.Context = context;
+            Mapper.Reset();
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var services = SetServices();
+            this.Provider = services.BuildServiceProvider();
+            this.Context = this.Provider.GetRequiredService<WebshopAppContext>();
         }
 
         private ServiceCollection SetServices()

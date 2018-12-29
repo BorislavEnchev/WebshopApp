@@ -19,6 +19,9 @@ namespace WebshopApp.Services.DataServices
             this.productsRepository = productsRepository;
         }
 
+        //specialy made for testing
+        public IEnumerable<Product> GetAllProducts() => this.productsRepository.All();
+
         public IEnumerable<ProductViewModel> GetAll() => this.productsRepository.All().To<ProductViewModel>();
         
         public async Task<int> Create(int categoryId, string name, string description, decimal price)

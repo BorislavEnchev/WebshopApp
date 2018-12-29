@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Shouldly;
 using WebshopApp.Data;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
@@ -16,40 +19,75 @@ namespace WebshopApp.Services.DataServices.Tests
 {
     public class ProductsServiceTests : FakeServices
     {
-        public ProductsServiceTests(IServiceProvider serviceProvider, WebshopAppContext context) 
-            : base(serviceProvider, context)
+        // RUN ALL TEST SEPARATED!
+        public Product[] GetTestData()
         {
-        }
-
-        public List<ProductViewModel> GetTestData()
-        {
-            return  new List<ProductViewModel>
+            return new Product[]
             {
-                new ProductViewModel
+                new Product
                 {
+                    Id = 1,
                     Name = "1",
+                    CategoryId = 1,
                     Description = "12345",
                     Price = 1.11m,
+                    Quantity = 4
                 },
 
-                new ProductViewModel
+                new Product
                 {
+                    Id = 2,
                     Name = "2",
-                    Description = "567890",
-                    Price = 2.2m
+                    CategoryId = 2,
+                    Description = "12345",
+                    Price = 1.12m,
+                    Quantity = 2
                 }
             };
         }
 
-        //[Fact]
-        //public void Method_ReturnsCorrect_WhenCorrectIsGiven()
-        //{
+        //Run separated
+        [Fact]
+        public void All_ShouldReturn_AllProducts()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
 
-        //    var repo = new Mock<IRepository<ProductViewModel>>();
-        //    repo.Setup(r => r.All()).Returns(GetTestData().AsQueryable);
+            var products = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(products);
+            var service = new ProductsService(repo.Object, null);
+            
+            //act
+            var result = service.GetAllProducts();
 
-        //    IProductsService service = new ProductsService(repo.Object, null);
-        //    var products = service.GetAll();
-        //}
+            //assert
+
+            Assert.Equal(2, result.Count());
+        }
+
+        //Run separated
+        [Fact]
+        public void Create_ShouldCreateANewProduct()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
+
+            var product = new Product
+            {
+                CategoryId = 1,
+                Name = "product",
+                Description = "123",
+                Price = 11.11m,
+            };
+            repo.Setup(x => x.AddAsync(product));
+            var service = new ProductsService(repo.Object, null);
+
+            //act
+            var result = service.Create(1, "product", "123", 11.11m);
+
+            //assert
+
+            result.ShouldNotBeNull();
+        }
     }
 }
