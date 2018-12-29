@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using AutoMapper;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Shouldly;
-using WebshopApp.Data;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
-using WebshopApp.Services.DataServices.Contracts;
-using WebshopApp.Services.MappingServices;
-using WebshopApp.Services.Models;
-using WebshopApp.Services.Models.ViewModels;
 using Xunit;
 
 namespace WebshopApp.Services.DataServices.Tests
@@ -64,6 +54,63 @@ namespace WebshopApp.Services.DataServices.Tests
             //assert
             Assert.Equal(2, result.Count());
         }
+        
+        //Run separated
+        [Fact]
+        public void GetProductById_ShouldReturnProduct()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
+
+            var products = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(products);
+            var service = new ProductsService(repo.Object, null);
+
+            //do
+            var id = service.GetAllProducts().Select(x => x.Id).FirstOrDefault();
+            var result = service.GetProductById<Product>(id);
+
+            //assert
+            result.Should().NotBeNull();
+        }
+
+        //Run separated
+        [Fact]
+        public void GetAllByCategory_ShouldNotBeNull_IfValidCategory()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
+
+            var products = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(products);
+            var service = new ProductsService(repo.Object, null);
+
+            //do
+            var categoryId = service.GetAllProducts().Select(x => x.CategoryId).FirstOrDefault();
+            var result = service.GetAllByCategory(categoryId);
+
+            //assert
+            result.Should().NotBeNull();
+        }
+
+        //Run Separated
+        [Fact]
+        public void GetAllByCategory_ShouldReturnEmpty_IfInvalidCategory()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
+
+            var products = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(products);
+            var service = new ProductsService(repo.Object, null);
+
+            //do
+            var categoryId = 99;
+            var result = service.GetAllByCategory(categoryId);
+
+            //assert
+            Assert.Empty(result);
+        }
 
         //Run separated
         [Fact]
@@ -84,24 +131,6 @@ namespace WebshopApp.Services.DataServices.Tests
 
             //do
             var result = service.Create(1, "product", "123", 11.11m);
-
-            //assert
-            result.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void GetProductById_ShouldReturnProduct()
-        {
-            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
-            var repo = new Mock<IRepository<Product>>();
-
-            var products = GetTestData().AsQueryable();
-            repo.Setup(x => x.All()).Returns(products);
-            var service = new ProductsService(repo.Object, null);
-
-            //do
-            var id = service.GetAllProducts().Select(x => x.Id).FirstOrDefault();
-            var result = service.GetProductById<Product>(id);
 
             //assert
             result.Should().NotBeNull();

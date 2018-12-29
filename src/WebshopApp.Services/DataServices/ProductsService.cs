@@ -83,6 +83,7 @@ namespace WebshopApp.Services.DataServices
                 .Where(p => p.CategoryId == categoryId)
                 .To<ProductViewModel>();
 
+        //TODO
         public bool AddRatingToProduct(int productId, int rating)
         {
             throw new System.NotImplementedException();
