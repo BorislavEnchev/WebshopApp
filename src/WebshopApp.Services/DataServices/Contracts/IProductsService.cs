@@ -19,6 +19,7 @@ namespace WebshopApp.Services.DataServices.Contracts
 
         IEnumerable<ProductViewModel> GetAllByCategory(int categoryId);
 
+        //not really functional yet..
         bool AddRatingToProduct(int productId, int rating);
     }
 }

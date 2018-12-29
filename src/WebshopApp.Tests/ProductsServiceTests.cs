@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
@@ -76,6 +78,28 @@ namespace WebshopApp.Services.DataServices.Tests
 
         //Run separated
         [Fact]
+        public void GetProductById_ShouldThrowException_If_InvalidIdIsGiven()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
+
+            var product = new Product
+            {
+                CategoryId = 1,
+                Name = "product",
+                Description = "123",
+                Price = 11.11m,
+            };
+            repo.Setup(x => x.AddAsync(product));
+            var service = new ProductsService(repo.Object, null);
+
+            //do            
+            Action action = () => service.GetProductById<Product>(2);
+            action.Should().Throw<KeyNotFoundException>();
+        }
+
+        //Run separated
+        [Fact]
         public void GetAllByCategory_ShouldNotBeNull_IfValidCategory()
         {
             Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
@@ -134,6 +158,6 @@ namespace WebshopApp.Services.DataServices.Tests
 
             //assert
             result.Should().NotBeNull();
-        }
+        }        
     }
 }

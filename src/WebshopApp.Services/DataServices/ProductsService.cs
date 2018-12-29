@@ -75,6 +75,11 @@ namespace WebshopApp.Services.DataServices
             var product = this.productsRepository.All().Where(x => x.Id == id)
                 .To<TViewModel>().FirstOrDefault();
 
+            if (product == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             return product;
         }
 
