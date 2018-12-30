@@ -12,6 +12,8 @@ namespace WebshopApp.Services.DataServices.Tests
             CreateMap<Product, Product>().ReverseMap();
             CreateMap<CategoryViewModel, Category>().ReverseMap();
             CreateMap<Category, Category>().ReverseMap();
+            CreateMap<CommentViewModel, Comment>().ReverseMap();
+            CreateMap<Comment, Comment>().ReverseMap();
         }
     }
 }
