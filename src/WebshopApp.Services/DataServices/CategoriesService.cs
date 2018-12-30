@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.MappingServices;
-using WebshopApp.Services.Models;
 using WebshopApp.Services.Models.ViewModels;
 
 namespace WebshopApp.Services.DataServices
@@ -31,6 +31,11 @@ namespace WebshopApp.Services.DataServices
         
         public async Task<int> Create(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Category must have a name!");
+            }
+
             var category = new Category
             {
                 Name = name

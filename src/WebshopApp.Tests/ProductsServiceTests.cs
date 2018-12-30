@@ -143,14 +143,6 @@ namespace WebshopApp.Services.DataServices.Tests
             Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
             var repo = new Mock<IRepository<Product>>();
 
-            var product = new Product
-            {
-                CategoryId = 1,
-                Name = "product",
-                Description = "123",
-                Price = 11.11m,
-            };
-            repo.Setup(x => x.AddAsync(product));
             var service = new ProductsService(repo.Object, null);
 
             //do
