@@ -54,7 +54,7 @@ namespace WebshopApp.Services.DataServices
             var category = this.categoriesRepository.All().FirstOrDefault(x => x.Name == name);
             if (category == null)
             {
-                throw new KeyNotFoundException();
+                throw new ArgumentException("Invalid category name.");
             }
             return category.Id;
         }

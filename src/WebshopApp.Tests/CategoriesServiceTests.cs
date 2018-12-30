@@ -104,6 +104,90 @@ namespace WebshopApp.Services.DataServices.Tests
                 actual = e.GetType();
             }
 
+            //assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void GetAllProductsFromCategory_ShouldThrowKeyNotFoundException_IfIdDoesNotExist()
+        {
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
+            var categoriesRepo = new Mock<IRepository<Category>>();
+            var productsRepo = new Mock<IRepository<Product>>();
+
+            var category = new Category { Id = 5, Name = "test category" };
+            var product = new Product
+            {
+                Id = 111,
+                Name = "product1",
+                CategoryId = 11,
+                Description = "product description for tests",
+                Price = 11.11m,
+                Quantity = 2
+            };
+
+            categoriesRepo.Setup(c => c.AddAsync(category));
+            productsRepo.Setup(p => p.AddAsync(product));
+
+            var productsService = new ProductsService(productsRepo.Object, null);
+            var categoriesService = new CategoriesService(categoriesRepo.Object, productsService);
+
+            var expected = typeof(KeyNotFoundException);
+            Type actual = null;
+            try
+            {
+                //do
+                var result = categoriesService.GetAllProductsFromCategory(12);
+            }
+            catch (KeyNotFoundException e)
+            {
+                actual = e.GetType();
+            }
+
+            //assert
+            Assert.Equal(expected, actual);            
+        }
+
+        [Fact]
+        public void GetCategoryId_ShouldReturnCorretNumber()
+        {
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
+            var repo = new Mock<IRepository<Category>>();
+
+            var categories = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(categories);
+            var service = new CategoriesService(repo.Object, null);
+
+            //do
+            var result = service.GetCategoryId("category1");
+
+            //assert
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void GetCategoryId_ShouldThrowArgumentException_IfIncorrectNameIsGiven()
+        {
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
+            var repo = new Mock<IRepository<Category>>();
+
+            var categories = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(categories);
+            var service = new CategoriesService(repo.Object, null);
+
+            var expected = typeof(ArgumentException);
+            Type actual = null;
+            try
+            {
+                //do
+                var result = service.GetCategoryId("category3");
+            }
+            catch (ArgumentException e)
+            {
+                actual = e.GetType();
+            }
+
+            //assert
             Assert.Equal(expected, actual);
         }
     }
