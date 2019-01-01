@@ -66,6 +66,11 @@ namespace WebshopApp.Services.DataServices
         {
             var product = productsRepository.All().FirstOrDefault(x => x.Id == id);
 
+            if (product == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             this.productsRepository.Delete(product);
             this.productsRepository.SaveChangesAsync();
         }

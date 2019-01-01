@@ -150,6 +150,20 @@ namespace WebshopApp.Services.DataServices.Tests
 
             //assert
             result.Should().NotBeNull();
-        }        
+        }
+        
+        [Fact]
+        public void Delete_ShouldThrowKeyNotFoundException_IfInvalidIdIsGiven()
+        {
+            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            var repo = new Mock<IRepository<Product>>();
+
+            var products = GetTestData().AsQueryable();
+            repo.Setup(x => x.All()).Returns(products);
+            var service = new ProductsService(repo.Object, null);
+
+            Action action = () => service.Delete(3);
+            action.Should().Throw<KeyNotFoundException>();
+        }
     }
 }

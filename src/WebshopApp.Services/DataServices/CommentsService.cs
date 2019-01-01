@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -29,6 +30,14 @@ namespace WebshopApp.Services.DataServices
 
         public IEnumerable<CommentViewModel> GetAllByProduct(int id)
         {
+            var exists = this.commentsRepository.All()
+                .Where(c => c.ProductId == id).Any();
+
+            if (!exists)
+            {
+                throw new ArgumentException("There are no comments for this product Id");
+            }
+
             var models = this.commentsRepository.All()
                 .Where(c => c.ProductId == id)
                 .To<CommentViewModel>();
@@ -55,14 +64,15 @@ namespace WebshopApp.Services.DataServices
 
         public async Task<int> Edit(CommentViewModel model)
         {
-            var comment = commentsRepository.All()
-                .FirstOrDefault(x => x.Id == model.Id); ;
+            var commentExists = commentsRepository.All()
+                .Any(x => x.Id == model.Id);
 
-            if (comment == null)
+            if (!commentExists)
             {
                 throw new KeyNotFoundException();
             }
-            
+
+            var comment = commentsRepository.All().First(x => x.Id == model.Id);
             comment.Content = model.Content;
 
             var id = await this.commentsRepository.Update(comment);
@@ -92,7 +102,12 @@ namespace WebshopApp.Services.DataServices
                 .To<CommentViewModel>()
                 .FirstOrDefault();
 
+            if (model == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             return model;
-        }
+        }      
     }
 }
