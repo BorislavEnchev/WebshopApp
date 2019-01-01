@@ -34,4 +34,13 @@
     <ProjectReference Include="..\WebshopApp.Models\WebshopApp.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Migrations\20190101152836_Addtional-Entities-Added-To-Databse.Designer.cs">
+      <DependentUpon>20190101152836_Addtional-Entities-Added-To-Databse.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Migrations\20190101153336_Unit-Added-To-Product-Entity.Designer.cs">
+      <DependentUpon>20190101153336_Unit-Added-To-Product-Entity.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

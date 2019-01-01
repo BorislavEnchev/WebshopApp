@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebshopApp.Data;
 
 namespace WebshopApp.Data.Migrations
 {
     [DbContext(typeof(WebshopAppContext))]
-    partial class WebshopAppContextModelSnapshot : ModelSnapshot
+    [Migration("20190101152836_Addtional-Entities-Added-To-Databse")]
+    partial class AddtionalEntitiesAddedToDatabse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -282,7 +284,7 @@ namespace WebshopApp.Data.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int>("Unit");
+                    b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 

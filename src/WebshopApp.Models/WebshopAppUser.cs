@@ -1,14 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebshopApp.Models
 {
-    // Add profile data for application users by adding properties to the WebshopAppUser class
+    [Serializable]
     public class WebshopAppUser : IdentityUser
     {
+        public WebshopAppUser()
+        {
+            ClientReceipts = new HashSet<ClientReceipt>();
+        }
+
         [Required]
         public string RoleId { get; set; }
 
         public string Role { get; set; }
+
+        public virtual IEnumerable<ClientReceipt> ClientReceipts { get; set; }
     }
 }

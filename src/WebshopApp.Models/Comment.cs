@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using WebshopApp.Models.Base;
 
 namespace WebshopApp.Models
 {
+    [Serializable]
     public class Comment : BaseModel<int>
     {
         [Required]

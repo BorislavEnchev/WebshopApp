@@ -43,7 +43,7 @@ namespace WebshopApp.Services.DataServices.Tests
         [Fact]
         public void All_ShouldReturn_AllProducts()
         {
-            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
 
             var products = GetTestData().AsQueryable();
@@ -61,7 +61,7 @@ namespace WebshopApp.Services.DataServices.Tests
         [Fact]
         public void GetProductById_ShouldReturnProduct()
         {
-            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
 
             var products = GetTestData().AsQueryable();
@@ -80,7 +80,7 @@ namespace WebshopApp.Services.DataServices.Tests
         [Fact]
         public void GetProductById_ShouldThrowException_If_InvalidIdIsGiven()
         {
-            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
 
             var product = new Product
@@ -95,6 +95,8 @@ namespace WebshopApp.Services.DataServices.Tests
 
             //do            
             Action action = () => service.GetProductById<Product>(2);
+
+            //assert
             action.Should().Throw<KeyNotFoundException>();
         }
 
@@ -102,7 +104,7 @@ namespace WebshopApp.Services.DataServices.Tests
         [Fact]
         public void GetAllByCategory_ShouldNotBeNull_IfValidCategory()
         {
-            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
 
             var products = GetTestData().AsQueryable();
@@ -121,7 +123,7 @@ namespace WebshopApp.Services.DataServices.Tests
         [Fact]
         public void GetAllByCategory_ShouldReturnEmpty_IfInvalidCategory()
         {
-            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
 
             var products = GetTestData().AsQueryable();
@@ -140,7 +142,7 @@ namespace WebshopApp.Services.DataServices.Tests
         [Fact]
         public void Create_ShouldCreateANewProduct()
         {
-            Mapper.Initialize(x => { x.AddProfile<MapperConfiguration>(); });
+            Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
 
             var service = new ProductsService(repo.Object, null);
@@ -162,7 +164,10 @@ namespace WebshopApp.Services.DataServices.Tests
             repo.Setup(x => x.All()).Returns(products);
             var service = new ProductsService(repo.Object, null);
 
+            //do
             Action action = () => service.Delete(3);
+
+            //assert
             action.Should().Throw<KeyNotFoundException>();
         }
     }
