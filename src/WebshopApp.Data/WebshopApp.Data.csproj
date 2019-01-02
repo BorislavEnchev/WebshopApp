@@ -41,6 +41,9 @@
     <Compile Update="Migrations\20190101153336_Unit-Added-To-Product-Entity.Designer.cs">
       <DependentUpon>20190101153336_Unit-Added-To-Product-Entity.cs</DependentUpon>
     </Compile>
+    <Compile Update="Migrations\20190102090026_dbSets-Initialized.Designer.cs">
+      <DependentUpon>20190102090026_dbSets-Initialized.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

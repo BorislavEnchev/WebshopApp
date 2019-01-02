@@ -17,6 +17,18 @@ namespace WebshopApp.Data
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Payment> Payments { get; set; }
+
+        public DbSet<Receipt> Receipts { get; set; }
+
+        public DbSet<ReceiptOrder> ReceiptsOrders { get; set; }
+
+        public DbSet<ClientReceipt> ClientsReceipts { get; set; }
+
+        public DbSet<ShipmentData> ShipmentsDatas { get; set; }
+               
         public DbSet<Image> Images { get; set; }
 
         public DbSet<Blog> Blogs { get; set; }

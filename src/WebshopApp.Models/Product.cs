@@ -24,7 +24,6 @@ namespace WebshopApp.Models
         public int Quantity { get; set; }
 
         public int CategoryId { get; set; }
-
         public virtual Category Category { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();

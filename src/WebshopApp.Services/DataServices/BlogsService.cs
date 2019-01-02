@@ -41,6 +41,11 @@ namespace WebshopApp.Services.DataServices
         {
             var blog = blogsRepository.All().Where(x => x.Id == id).To<TViewModel>().FirstOrDefault();
 
+            if (blog == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             return blog;
         }
     }
