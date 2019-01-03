@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebshopApp.Models;
 using WebshopApp.Services.MappingServices;
 using WebshopApp.Services.Models.ViewModels;
 
@@ -23,6 +24,7 @@ namespace WebshopApp.Services.Models.InputModels
 
         [Required]
         public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
 
         public ICollection<ImageViewModel> Images { get; set; }
     }

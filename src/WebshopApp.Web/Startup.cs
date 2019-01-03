@@ -17,9 +17,7 @@ using WebshopApp.Models;
 using WebshopApp.Services.DataServices;
 using WebshopApp.Services.DataServices.Contracts;
 using WebshopApp.Services.MappingServices;
-using WebshopApp.Services.Models;
 using WebshopApp.Services.Models.ViewModels;
-using WebshopApp.Web.Models;
 
 namespace WebshopApp.Web
 {
@@ -60,13 +58,8 @@ namespace WebshopApp.Web
                 })
                 .AddEntityFrameworkStores<WebshopAppContext>()
                 .AddDefaultTokenProviders();
+                                 
 
-            services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
-            services.AddScoped<IProductsService, ProductsService>();
-            services.AddScoped<ICategoriesService, CategoriesService>();
-            services.AddScoped<IImagesService, ImagesService>();
-            services.AddScoped<IBlogsService, BlogsService>();
-            services.AddScoped<ICommentsService, CommentsService>();
             services.AddSession();
 
             services.AddMvc(options =>
@@ -101,6 +94,34 @@ namespace WebshopApp.Web
                         }
                     };
                 });
+
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+                options.SchemaName = "dbo";
+                options.TableName = "Cache";
+            });
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = new TimeSpan(0, 4, 0, 0);
+                options.Cookie.HttpOnly = true;
+            });
+
+            //services.AddLogging(lb =>
+            //{
+            //    lb.AddConfiguration(Configuration.GetSection("Logging"));
+            //    lb.AddFile(o => o.RootPath = AppContext.BaseDirectory);
+            //});
+
+            services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
+            services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IImagesService, ImagesService>();
+            services.AddScoped<IBlogsService, BlogsService>();
+            services.AddScoped<ICommentsService, CommentsService>();
+            services.AddScoped<ICartsService, CartsService>();
+            //services.AddScoped<HttpContext, HttpContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
