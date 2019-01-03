@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.Models.InputModels;
@@ -115,7 +117,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.Add(model);
 
             //assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull().And.BeOfType<Task<int>>();
         }
 
         [Fact]
@@ -158,7 +160,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.GetById(1);
 
             //assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull().And.BeOfType<CommentViewModel>();
         }
 
         [Fact]
@@ -171,11 +173,11 @@ namespace WebshopApp.Services.DataServices.Tests
             repo.Setup(r => r.All()).Returns(comments);
             var service = new CommentsService(repo.Object);
 
+            //do
             var expected = typeof(KeyNotFoundException);
             Type actual = null;
             try
-            {
-                //do
+            {                
                 var result = service.GetById(3);
             }
             catch (KeyNotFoundException e)
@@ -208,7 +210,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.Edit(model);
 
             //assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull().And.BeOfType<Task<int>>();
             //TODO: check if its updated
         }
     }

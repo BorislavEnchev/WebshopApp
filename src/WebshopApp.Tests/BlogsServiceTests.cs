@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using WebshopApp.Services.Models.ViewModels;
@@ -78,7 +80,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.Create("Title", "Content");
 
             //assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull().And.BeOfType<Task<int>>();
         }
 
         [Fact]
@@ -95,7 +97,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.GetBlogById<BlogViewModel>(1);
 
             //assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull().And.BeOfType<BlogViewModel>();
         }
 
         [Fact]

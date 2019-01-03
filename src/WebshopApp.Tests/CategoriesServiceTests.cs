@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
 using Xunit;
@@ -66,7 +67,7 @@ namespace WebshopApp.Services.DataServices.Tests
         }
 
         [Fact]
-        public void Create_ShouldCreateACategory()
+        public void Create_ShouldCreateACategoryAndReturnTheId()
         {
             Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Category>>();
@@ -77,7 +78,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.Create("category");
 
             //assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull().And.BeOfType<Task<int>>();
         }
 
         [Fact]

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
 using WebshopApp.Data.Common;
 using WebshopApp.Models;
+using WebshopApp.Services.Models.ViewModels;
 using Xunit;
 
 namespace WebshopApp.Services.DataServices.Tests
@@ -59,7 +61,7 @@ namespace WebshopApp.Services.DataServices.Tests
         
         //Run separated
         [Fact]
-        public void GetProductById_ShouldReturnProduct()
+        public void GetProductById_ShouldReturnProductWithTheGivenId()
         {
             Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
@@ -73,7 +75,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.GetProductById<Product>(id);
 
             //assert
-            result.Should().NotBeNull();
+            result.Should().NotBeNull().And.BeOfType<Product>();
         }
 
         //Run separated
@@ -102,7 +104,7 @@ namespace WebshopApp.Services.DataServices.Tests
 
         //Run separated
         [Fact]
-        public void GetAllByCategory_ShouldNotBeNull_IfValidCategory()
+        public void GetAllByCategory_ShouldNotBeNull_IfValidCategoryIsGiven()
         {
             Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
@@ -140,7 +142,7 @@ namespace WebshopApp.Services.DataServices.Tests
 
         //Run separated
         [Fact]
-        public void Create_ShouldCreateANewProduct()
+        public void Create_ShouldCreateANewProductAndReturnTheId()
         {
             Mapper.Initialize(x => x.AddProfile<MapperConfiguration>());
             var repo = new Mock<IRepository<Product>>();
@@ -151,7 +153,7 @@ namespace WebshopApp.Services.DataServices.Tests
             var result = service.Create(1, "product", "123", 11.11m);
 
             //assert
-            result.Should().NotBeNull();
+            result.Should().NotBeNull().And.BeOfType<Task<int>>();
         }
         
         [Fact]
